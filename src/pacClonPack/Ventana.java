@@ -27,9 +27,6 @@ public class Ventana extends JPanel implements ActionListener {
     private ArrayList<Pared> pared = new ArrayList<>();
     private ArrayList<Puntitos> puntitos = new ArrayList<>();
 
-    //private Pared[][] pared = new Pared[Settings.FILAS][Settings.COLUMNAS];
-    //private Puntitos[][] puntitos = new Puntitos[Settings.FILAS][Settings.COLUMNAS];
-
     private Marcadores marcador;
     private Marcadores nivel;
     private Marcadores hi;
@@ -65,8 +62,9 @@ public class Ventana extends JPanel implements ActionListener {
 
         instanciar_elementos_laberinto();
 
-        marcador = new Marcadores(settings.getTileY(), (int) (settings.resX / 20), (int) (settings.getTileY() / 1.1), "Score: ");
-        hi = new Marcadores(settings.getTileY(), (int) (settings.resX / 1.6), (int) (settings.getTileY() / 1.1), "Record: ");
+        marcador = new Marcadores(0, settings.getTileY(), (int) (settings.resX / 20), (int) (settings.getTileY() / 1.1), "Ptos: ");
+        nivel = new Marcadores(1, settings.getTileY(), (int) (settings.resX / 2.6), (int) (settings.getTileY() / 1.1), "Nivel: ");
+        hi = new Marcadores(2, settings.getTileY(), (int) (settings.resX / 1.5), (int) (settings.getTileY() / 1.1), "Max: ");
 
         timer = new Timer((int) (1000 / settings.FPS), this);
         timer.start();
@@ -90,10 +88,10 @@ public class Ventana extends JPanel implements ActionListener {
                     pared.add(new Pared(ii, i, ancho, alto));
 
                 } else if (tile == 1) {
-                    puntitos.add(new Puntitos(ii, i, ancho, alto));
+                    puntitos.add(new Puntitos(ii, i, ancho, alto, false));
 
                 } else if (tile == 5) {
-                    pared.add(new Pared(ii, i, 5, 5));
+                    puntitos.add(new Puntitos(ii, i, ancho, alto, true));
                     
                 } else {
                     pared.add(new Pared(ii, i, 2, 2));
@@ -121,6 +119,7 @@ public class Ventana extends JPanel implements ActionListener {
         }
 
         marcador.dibuja(g, settings.getPuntos());
+        nivel.dibuja(g, settings.getNivel());
         hi.dibuja(g, settings.getHiScore());
 
         Toolkit.getDefaultToolkit().sync();      

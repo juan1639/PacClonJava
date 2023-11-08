@@ -9,13 +9,15 @@ import javax.swing.JPanel;
 // ===============================================================
 public class Marcadores {
 
-	public int size;
-	public int x;
-	public int y;
-	public String txt;
+	private int id;
+	private int size;
+	private int x;
+	private int y;
+	private String txt;
 
-	public Marcadores(int size, int x, int y, String txt) {
+	public Marcadores(int id, int size, int x, int y, String txt) {
 
+		this.id = id;
 		this.size = size;
 		this.x = x;
 		this.y = y;
@@ -24,15 +26,16 @@ public class Marcadores {
 
 	public void dibuja(Graphics g, int valor) {
 
-		int[] rgb = {225, 225, 9};
+		int id = this.id;
+		int[] rgb = {235, 235, 135, 225, 225, 9, 235, 200, 9};
 
 		Font fuente = new Font("Helvetica", Font.BOLD, this.size);
 
 		String textoScore = this.txt + valor;
 
 		g.setFont(fuente);
-		g.setColor(new Color(rgb[0], rgb[1], rgb[2]));
-		g.drawString(textoScore, this.x, this.y);
+		g.setColor(new Color(rgb[id * 3], rgb[id * 3 + 1], rgb[id * 3 + 2]));
+		g.drawString(textoScore, this.x, this.y - 4);
 	}
 
 	public static int check_nuevoRecord(int marcador, int hi) {
