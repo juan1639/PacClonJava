@@ -17,7 +17,7 @@ public class Settings {
 
     // iniSprites x, y, id, direccion (0 dcha, 1 izda, 2 up 3 do)
     private int[][] iniSprites = {
-        {0, 0, 0, 0},
+        {9, 4, 0, 0},
         {0, 0, 0, 0},
         {0, 0, 1, 0},
         {0, 0, 2, 1},
@@ -86,9 +86,9 @@ public class Settings {
     // ================================================
     public class Estado {
 
-    	public Boolean preJuego = true;
+    	public Boolean preJuego = false;
         public Boolean preparado = false;
-    	public Boolean enJuego = false;
+    	public Boolean enJuego = true;
         public Boolean nivelSuperado = false;
     	public Boolean gameOver = false;
 

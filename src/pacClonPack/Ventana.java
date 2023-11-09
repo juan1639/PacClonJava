@@ -27,6 +27,8 @@ public class Ventana extends JPanel implements ActionListener {
     private ArrayList<Pared> pared = new ArrayList<>();
     private ArrayList<Puntitos> puntitos = new ArrayList<>();
 
+    private PacMan pacman;
+
     private Marcadores marcador;
     private Marcadores nivel;
     private Marcadores hi;
@@ -61,6 +63,7 @@ public class Ventana extends JPanel implements ActionListener {
     private void comenzar() {
 
         instanciar_elementos_laberinto();
+        instanciar_pacman();
 
         marcador = new Marcadores(0, settings.getTileY(), (int) (settings.resX / 20), (int) (settings.getTileY() / 1.1), "Ptos: ");
         nivel = new Marcadores(1, settings.getTileY(), (int) (settings.resX / 2.6), (int) (settings.getTileY() / 1.1), "Nivel: ");
@@ -101,6 +104,13 @@ public class Ventana extends JPanel implements ActionListener {
         }
     }
 
+    private void instanciar_pacman() {
+
+        int[][] args = settings.getIniSprites();
+
+        pacman = new PacMan(args[0][0], args[0][1], settings.getTileX(), settings.getTileY(), args[0][3]);
+    }
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -110,6 +120,8 @@ public class Ventana extends JPanel implements ActionListener {
     
     private void renderiza(Graphics g) {
 
+        int[][] matriz = settings.laberinto.matriz;
+
         for (Pared tile: pared) {
             tile.dibuja(g);
         }
@@ -117,6 +129,8 @@ public class Ventana extends JPanel implements ActionListener {
         for (Puntitos tile: puntitos) {
             tile.dibuja(g);
         }
+
+        pacman.dibuja(g, matriz, settings);
 
         marcador.dibuja(g, settings.getPuntos());
         nivel.dibuja(g, settings.getNivel());
