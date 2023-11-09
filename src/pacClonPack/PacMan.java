@@ -7,6 +7,7 @@ import java.awt.Graphics;
 public class PacMan {
 
 	public static final int DIVIDIR_TILE_ENTRE = 10;
+	public static final int NRO_ANIMAS_BOCA = 10;
 
 	private int x;
 	private int y;
@@ -16,12 +17,15 @@ public class PacMan {
 	private int pulsadaConfirmada;
 
 	private int[][] direcciones = {
-		{1, 0, 0},
-		{-1, 0, 2},
-		{0, -1, 4},
-		{0, 1, 6},
+		{1, 0, 80, 190, 45, 270},
+		{-1, 0, 260, 190, 225, 270},
+		{0, -1, 170, 190, 135, 270},
+		{0, 1, 350, 190, 315, 270},
 	};
-	private int nextAnima;
+	private int contador_anima;
+	private int step;
+	private int iniRad;
+
 	private int[] velXY = {0, 0};
 	private int vel;
 	private Boolean avanzar;
@@ -37,7 +41,9 @@ public class PacMan {
 		this.pulsadaConfirmada = this.pulsada;
 		this.direcciones = direcciones;
 
-		this.nextAnima = 0;
+		this.contador_anima = NRO_ANIMAS_BOCA;
+		this.step = (int) ((85 + 5) / NRO_ANIMAS_BOCA);
+		this.iniRad = iniRad;
 
 		this.velXY[0] = this.direcciones[this.pulsada][0];
 		this.velXY[1] = this.direcciones[this.pulsada][1];
@@ -48,11 +54,22 @@ public class PacMan {
 
 	public void dibuja(Graphics g, int[][] matriz, Settings sett) {
 
+		int[] rgb = {218, 225, 5};
+
 		this.pulsada = actualiza_teclado(sett);
 		actualiza(matriz);
 
-		g.setColor(Color.yellow);
-		g.fillOval(this.x, this.y, this.tileX, this.tileY);
+		this.contador_anima --;
+
+		if (this.contador_anima <= 1) {
+			this.contador_anima = NRO_ANIMAS_BOCA;
+		}
+
+		int iniR = this.iniRad - this.contador_anima * this.step;
+		int finR = this.direcciones[0][3] + (this.contador_anima * this.step) * 2;
+
+		g.setColor(new Color(rgb[0], rgb[1], rgb[2]));
+		g.fillArc(this.x, this.y, this.tileX, this.tileY, iniR, finR);
 
 	}
 
@@ -72,6 +89,7 @@ public class PacMan {
 				this.pulsadaConfirmada = this.pulsada;
 				this.velXY[0] = this.direcciones[this.pulsada][0];
 				this.velXY[1] = this.direcciones[this.pulsada][1];
+				this.iniRad = this.direcciones[this.pulsada][2];
 
 			} else if (!colisionVelXY) {
 

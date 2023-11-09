@@ -15,7 +15,7 @@ public class Settings {
 
     public int FPS = 60;
 
-    // iniSprites x, y, id, direccion (0 dcha, 1 izda, 2 up 3 do)
+    // iniSprites {x, y, id, direccion (0 dcha, 1 izda, 2 up 3 do)}
     private int[][] iniSprites = {
         {9, 4, 0, 0},
         {0, 0, 0, 0},
